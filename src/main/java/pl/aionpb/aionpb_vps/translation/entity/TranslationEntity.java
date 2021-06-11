@@ -1,6 +1,8 @@
 package pl.aionpb.aionpb_vps.translation.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import pl.aionpb.aionpb_vps.db.object.Settings;
+
 import javax.persistence.*;
 
 /**
