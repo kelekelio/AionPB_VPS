@@ -1,0 +1,14 @@
+db:
+  configurations:
+    0:
+      url: jdbc:mysql://localhost:3306/aion?useSSL=false&serverTimezone=CET
+      username: root
+      driver: com.mysql.cj.jdbc.Driver
+      password:
+    1:
+      url: jdbc:mysql://localhost:3306/aion_c?useSSL=false&serverTimezone=CET
+      username: root
+      driver: com.mysql.cj.jdbc.Driver
+      password:
+server:
+  port: 8090
