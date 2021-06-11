@@ -1,0 +1,30 @@
+<!--
+* @author Grzegorz Nowakowski
+-->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
+<head th:fragment="header(title)">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title th:replace="${title}">Aion PowerBook DB</title>
+
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.ico" th:href="@{/images/favicon.ico}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootnavbar.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jquery.dataTables.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tooltipster.main.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/aion.css}" >
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css" rel="stylesheet"/>
+
+
+</head>
+<body>
+
+</body>
+</html>

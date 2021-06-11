@@ -1,0 +1,17 @@
+.col_junk, a.col_junk { color:#acacac !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+.col_common, a.col_common { color:#acacac !important; text-decoration:none;  letter-spacing:0px; font-weight:normal !important; }
+.col_rare, a.col_rare { color:#69e15e !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+.col_legend, a.col_legend { color:#4ccfff !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+.col_unique, a.col_unique{ color:#ffc103 !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+.col_epic, a.col_epic{color:#ff8033 !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+.col_mythic, a.col_mythic{color:#800080 !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+.col_ancient, a.col_ancient{color:#f1a12e !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+.col_finality, a.col_finality{color:#e14141 !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+.col_relic, a.col_relic{color:#dd43ef !important; text-decoration:none; letter-spacing:0px; font-weight:normal !important; }
+
+body.questWindow {
+    background-image: url(/images/mask.png);
+    background-repeat: no-repeat;
+    height:510px !important;
+    width:410px;
+}

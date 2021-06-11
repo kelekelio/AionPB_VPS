@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/aion.css}" >
+</head>
+<body class="questWindow" id="questWindow" >
+<div style="padding-top:50px; padding-left:10px;">
+    <div  style="display:block; width:375px; height:420px; overflow-y:auto ">
+        <div id="includedContent" data-th-utext="${quest.questText}"></div>
+        <div id="includedContent" data-th-utext="${quest.questSummary}"></div>
+    </div>
+</div>
+</body>
+</html>

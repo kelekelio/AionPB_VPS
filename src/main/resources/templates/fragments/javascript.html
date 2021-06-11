@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
+<head></head>
+<body>
+<div th:fragment="js">
+    <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/bootnavbar.js}"></script>
+    <script th:src="@{/js/jquery.dataTables.js}"></script>
+    <script th:src="@{/js/tooltipster.bundle.js}"></script>
+    <script>
+        function flatten(params) {
+            params.columns.forEach(function (column, index) {
+                params['columns[' + index + '].data'] = column.data;
+                params['columns[' + index + '].name'] = column.name;
+                params['columns[' + index + '].searchable'] = column.searchable;
+                params['columns[' + index + '].orderable'] = column.orderable;
+                params['columns[' + index + '].search.regex'] = column.search.regex;
+                params['columns[' + index + '].search.value'] = column.search.value;
+            });
+            delete params.columns;
+
+            params.order.forEach(function (order, index) {
+                params['order[' + index + '].column'] = order.column;
+                params['order[' + index + '].dir'] = order.dir;
+            });
+            delete params.order;
+
+            params['search.regex'] = params.search.regex;
+            params['search.value'] = params.search.value;
+            delete params.search;
+
+            return params;
+        }
+
+
+
+        $(function () {
+            $('#main_navbar').bootnavbar();
+        })
+
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+
+
+        $('table#itemajax').DataTable({
+            'ajax': {
+                'url': '/itemajax',
+                'type': 'GET',
+                'data': flatten
+            },
+            serverSide: true,
+            columns: [
+                {
+                    data: 'id'
+                },
+                {
+                    data: 'iconName',
+                    render: function (data, type, row, meta) {
+                        var icon = row['iconName'].toLowerCase().replaceAll(".dds", "");
+                        return "<img class='thumb' src='https://aionpowerbook.com/item/icon/" + icon + ".png' width='37' height='37' >";
+                    }
+                },
+                {
+                    data: 'name',
+                    render: function (data, type, row, meta) {
+                        return "<a href='/item/" + row['id'] + "' class='col_" + row['quality'] + " bold' >"+row['name']+"</a>";
+                    }
+                }
+            ]
+        });
+
+
+        $('.tooltipzy').tooltipster({
+            side: 'right',
+            content: 'Loading...',
+            animationDuration: 10,
+            contentAsHTML: true,
+            theme: ['aiontooltip'],
+            // 'instance' is basically the tooltip. More details in the "Object-oriented Tooltipster" section.
+            functionBefore: function(instance, helper) {
+
+                var $origin = $(helper.origin),
+                    toolid = $origin.attr('tooltipid');
+                toollang = $origin.attr('tooltiplang');
+                toolcount = $origin.attr('tooltipcount');
+                classic = $origin.attr('classic');
+
+
+                // we set a variable so the data is only loaded once via Ajax, not every time the tooltip opens
+                if ($origin.data('loaded') !== true) {
+
+                    $.get("/tooltip/" + toolid, function(data) {
+
+                        // call the 'content' method to update the content of our tooltip with the returned data.
+                        // note: this content update will trigger an update animation (see the updateAnimation option)
+                        instance.content(data);
+
+                        // to remember that the data has been loaded
+                        $origin.data('loaded', true);
+                    });
+                }
+            }
+        });
+
+
+
+        $('table#ajaxTable').each(function() {
+            var type = $(this).attr("type");
+            var source = "/itemajax/" + type;
+            var DataTable = $(this).DataTable( {
+                "fnDrawCallback": function(){
+
+                    $('.tooltipzy').tooltipster({
+                        side: 'right',
+                        content: 'Loading...',
+                        animationDuration: 10,
+                        contentAsHTML: true,
+                        theme: ['aiontooltip'],
+                        // 'instance' is basically the tooltip. More details in the "Object-oriented Tooltipster" section.
+                        functionBefore: function(instance, helper) {
+
+
+                            var $origin = $(helper.origin),
+                                toolid = $origin.attr('tooltipid');
+                            toollang = $origin.attr('tooltiplang');
+                            toolcount = $origin.attr('tooltipcount');
+                            classic = $origin.attr('classic');
+
+
+                            // we set a variable so the data is only loaded once via Ajax, not every time the tooltip opens
+                            if ($origin.data('loaded') !== true) {
+
+                                $.get("/tooltip/" + toolid, function(data) {
+
+                                    // call the 'content' method to update the content of our tooltip with the returned data.
+                                    // note: this content update will trigger an update animation (see the updateAnimation option)
+                                    instance.content(data);
+
+                                    // to remember that the data has been loaded
+                                    $origin.data('loaded', true);
+                                });
+                            }
+                        }
+                    });
+
+
+                },
+                ajax: {
+                    'url': source,
+                    'type': 'GET',
+                    'data': flatten
+                },
+                language: {
+                    processing : '<img src=\'/images/processing.gif\'>'
+                },
+                serverSide: true,
+                processing: true,
+                columns: [
+                    {
+                        data: 'id'
+                    },
+                    {
+                        data: 'iconName'
+                    },
+                    {
+                        data: 'description',
+                        render: function (data, type, row, meta) {
+                            return "<a href='/item/" + row['id'] + "' class='col_" + row['quality'] + " bold tooltipzy ' tooltipid='" + row['id'] + "' >"+row['description']+"</a><span style=\"display: block;  float: right;\" class=\"itempreviewlist tooltipstered\" mesh=\"da_r002\" meshid=\"100200001\"><img src=\"https://aionpowerbook.com/powerbook/skins/MonoBook/img/itemfeatures/itempreview2.png\"></span>";
+                        }
+                    },
+                    {
+                        data: 'level'
+                    },
+                    {
+                        data: 'itemType'
+                    },
+                    {
+                        data: 'drivenEnchantType'
+                    },
+                    {
+                        data: 'clientVersion'
+                    }
+                ]
+            });
+        });
+
+        $('table#ajaxTableDungeons').each(function() {
+            var type = $(this).attr("type");
+            var source = "/dungeonsajax";
+            var DataTable = $(this).DataTable( {
+                ajax: {
+                    'url': source,
+                    'type': 'GET',
+                    'data': flatten
+                },
+                serverSide: true,
+                columns: [
+                    {
+                        data: 'id'
+                    },
+                    {
+                        data: 'description'
+                    },
+                    {
+                        data: 'race'
+                    }
+                ]
+            });
+        });
+
+
+    </script>
+</div>
+</body>
+</html>

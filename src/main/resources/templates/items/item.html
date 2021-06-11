@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
+<head></head>
+<body>
+<div class="item" th:fragment="item">
+    <div th:text="${item.itemEntity.id}"></div>
+    <div th:text="${item.description}"></div>
+    <div th:text="${item.descLong}"></div>
+    <div th:text="${item.price}"></div>
+</div>
+</body>
+</html>
